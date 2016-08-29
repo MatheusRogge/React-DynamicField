@@ -9,7 +9,6 @@ export default class Form extends React.Component
         super();
 
         this.state = {
-            formFields: FormStore.getAll(),
             selectedType: 'text'
         };
     }
@@ -21,45 +20,27 @@ export default class Form extends React.Component
     
     render()
     {
-        const formFields = this.state.formFields.map((value, key) => {
-            return (
-                <div key={value.id}>
-                    <span><b>{value.placeholder}: </b></span>
-                    <DynamicField {...value} />
-                </div>
-            );
-        });
+        const options = 
+        [ 
+            { value: 'text', text: 'Text' }, 
+            { value: 'textarea', text: 'Text Area' }, 
+            { value: 'number', text: 'Number' } 
+        ];
         
         return (
-
             <div>
                 <div>
                     <h1> Dynamic Types </h1>
                     <section>
-
                         <span>
                             <label>Dynamic Field: </label>
                             <DynamicField id="0" type={this.state.selectedType} />
                         </span> 
-                        
                         <br />
-                        
                         <span>
                             <label> Type of: </label>
-                            <select value={this.state.selectedType} onChange={this.typeChanged.bind(this)}>
-                                <option value="text">Text</option>
-                                <option value="checkbox">checkbox</option>
-                            </select>
+                            <DynamicField type="select" options={options} changeHandler={this.typeChanged.bind(this)} />
                         </span>
-
-                    </section>
-                    
-                </div>
-
-                <div>
-                    <h1> With Flux Stores </h1>
-                    <section>
-                        {formFields}
                     </section>
                 </div>
             </div>
